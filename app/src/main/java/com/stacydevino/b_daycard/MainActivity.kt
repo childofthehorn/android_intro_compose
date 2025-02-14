@@ -3,7 +3,10 @@ package com.stacydevino.b_daycard
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.annotation.ColorInt
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -15,17 +18,22 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.view.WindowCompat
 import com.stacydevino.b_daycard.ui.theme.BDayCardTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars = false
+
         setContent {
             BDayCardTheme {
                 // A surface container using the 'background' color from the theme
@@ -52,7 +60,7 @@ fun Greeting(toggle: Boolean, onNameChange: (Boolean) -> Unit) {
     }
     Column (
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxSize(1f)
+        modifier = Modifier.systemBarsPadding().fillMaxSize(1f)
             .padding(8.dp),
             ) {
         Text(
@@ -70,6 +78,7 @@ fun Greeting(toggle: Boolean, onNameChange: (Boolean) -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Bottom,
         modifier = Modifier
+            .navigationBarsPadding()
             .fillMaxSize(1f)
             .padding(16.dp)
     ) {
@@ -90,7 +99,7 @@ fun BirthdayCard (){
     Greeting(toggle = toggle, onNameChange = { toggle = it })
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, device = "id:pixel_9_pro")
 @Composable
 fun DefaultPreview() {
     BDayCardTheme {
